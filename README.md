@@ -6,7 +6,7 @@
 
 It's built for the people who read HL7 all day: interface analysts, integration engineers, and support staff tracing a bad ADT or a missing lab result. It's also built for the data inside those messages. HL7Forge runs entirely in your browser tab, with no server, no build step, and no dependencies. A strict Content-Security-Policy blocks every network request, so patient data never leaves your computer.
 
-**[Try it in your browser →](https://nbomm.github.io/HL7Forge/src/)**, or download the repository and open `src/index.html`.
+**[Try it in your browser →](https://nbomm.github.io/HL7Forge/)**, or download the repository and open `index.html`.
 
 ### Highlights
 
@@ -47,7 +47,7 @@ sessionStorage was deliberately not used: Chromium browsers write it to disk une
 
 ## Running
 
-No build step and no dependencies. Open `src/index.html` directly in Chrome, Edge, or Firefox (double-click it, or drag it into a browser window).
+No build step and no dependencies. Open `index.html` directly in Chrome, Edge, or Firefox (double-click it, or drag it into a browser window).
 
 If you host it on an internal web server, also send the same Content-Security-Policy as an HTTP response header, with `frame-ancestors 'none'` added (a `<meta>` policy can't set it, and it stops other sites from framing the page). Also send `X-Content-Type-Options: nosniff` and `Referrer-Policy: no-referrer`.
 
@@ -74,13 +74,13 @@ If you host it on an internal web server, also send the same Content-Security-Po
 ## Project layout
 
 ```
-src/index.html               Page shell and Content-Security-Policy
-src/css/styles.css           Styles (system fonts only)
-src/js/hl7-parser.js         Parser: pure functions, no I/O
-src/js/hl7-definitions.js    Segment/field/data type names and code tables (v2.5.1)
-src/js/samples.js            Fictional sample messages
-src/js/theme-init.js         Applies the saved theme before first paint
-src/js/app.js                UI rendering and interaction
+index.html               Page shell and Content-Security-Policy
+css/styles.css           Styles (system fonts only)
+js/hl7-parser.js         Parser: pure functions, no I/O
+js/hl7-definitions.js    Segment/field/data type names and code tables (v2.5.1)
+js/samples.js            Fictional sample messages
+js/theme-init.js         Applies the saved theme before first paint
+js/app.js                UI rendering and interaction
 tests/parser.test.js         Parser tests
 LICENSE                      MIT License
 ```
@@ -94,7 +94,7 @@ node --test tests/parser.test.js
 The parser can also be used from Node:
 
 ```js
-const { parse, getValue, locate, tokenize } = require('./src/js/hl7-parser.js');
+const { parse, getValue, locate, tokenize } = require('js/hl7-parser.js');
 const msg = parse(text).messages[0];
 getValue(msg, 'PID-5.1');     // family name
 getValue(msg, 'PID-3(2).1');  // 2nd repetition of PID-3, component 1
