@@ -1,9 +1,9 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const P = require('../src/js/hl7-parser.js');
-const D = require('../src/js/hl7-definitions.js');
-require('../src/js/samples.js');
+const P = require('./js/hl7-parser.js');
+const D = require('./js/hl7-definitions.js');
+require('./js/samples.js');
 const samples = globalThis.HL7Samples;
 
 test('parses MSH delimiters and header fields', () => {
