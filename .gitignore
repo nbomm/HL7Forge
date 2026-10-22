@@ -1,0 +1,15 @@
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Logs and local test output
+*.log
+node_modules/
+
+# Never commit real HL7 messages: they usually contain patient data.
+*.hl7
+*.msg
