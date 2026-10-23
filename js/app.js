@@ -1128,10 +1128,12 @@
     if (THEMES.indexOf(theme) !== -1) document.documentElement.setAttribute('data-theme', theme);
     else document.documentElement.removeAttribute('data-theme');
     const now = currentTheme();
+    // The icon shows the theme a click switches to (moon while light, sun while dark).
+    const target = nextTheme();
     el.themeToggle.querySelectorAll('[data-icon]').forEach(function (icon) {
-      icon.toggleAttribute('hidden', icon.getAttribute('data-icon') !== now);
+      icon.toggleAttribute('hidden', icon.getAttribute('data-icon') !== target);
     });
-    const label = 'Theme: ' + THEME_NAMES[now] + ' (click for ' + THEME_NAMES[nextTheme()] + ')';
+    const label = 'Theme: ' + THEME_NAMES[now] + ' (click for ' + THEME_NAMES[target] + ')';
     el.themeToggle.title = label;
     el.themeToggle.setAttribute('aria-label', label);
   }
