@@ -1249,6 +1249,7 @@
   el.switcher.addEventListener('click', function (e) { if (e.target === el.switcher) el.switcher.close(); });
   // About dialog: opened by the header "?" button; Esc, the close button, or a backdrop click closes it.
   const about = $('about');
+  if (window.HL7FORGE_BUILD) $('about-version').textContent = window.HL7FORGE_BUILD;
   $('help-btn').addEventListener('click', function () { about.showModal(); });
   $('about-close').addEventListener('click', function () { about.close(); });
   about.addEventListener('click', function (e) { if (e.target === about) about.close(); });

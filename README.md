@@ -81,7 +81,9 @@ js/hl7-parser.js         Parser: pure functions, no I/O
 js/hl7-definitions.js    Segment/field/data type names and code tables (v2.5.1)
 js/samples.js            Fictional sample messages
 js/theme-init.js         Applies the saved theme before first paint
+js/version.js            Build stamp (commit hash) shown in the About dialog
 js/app.js                UI rendering and interaction
+scripts/stamp-version.js Regenerates js/version.js; run before committing a release
 tests/parser.test.js         Parser tests
 LICENSE                      MIT License
 ```

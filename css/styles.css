@@ -466,6 +466,8 @@ kbd {
 }
 .about::backdrop { background: rgb(16 24 40 / 35%); }
 .about-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.about-version { font-weight: 400; color: var(--text-muted); }
+.about-version code { font: 12.5px var(--mono); }
 .about-body { padding: 14px 16px 4px; font-size: 13.5px; line-height: 1.55; }
 .about-body p { margin: 0 0 10px; }
 .about-body ul { margin: 0 0 10px; padding-left: 20px; }
