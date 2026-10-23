@@ -819,6 +819,26 @@
     toast('Saved for this session');
   }
 
+  /**
+   * Downloads the input as a .hl7 file. The name carries only the message type (e.g. "ADT-A01.hl7"), never
+   * patient details, because download history and file listings are visible outside this tab.
+   */
+  function saveToFile() {
+    const text = el.input.value;
+    if (!text.trim()) { toast('Nothing to save'); return; }
+    const first = P.parse(text.slice(0, 4000)).messages[0]; // MSH-9 is all that's needed
+    const type = first ? describeMessage(first).type.replace(/\^/g, '-').replace(/[^\w-]/g, '') : '';
+    // The textarea normalises line breaks to \n; write \r\n so the file reads correctly in any editor and HL7 tool.
+    const blob = new Blob([text.replace(/\r\n|\r|\n/g, '\r\n')], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = h('a', { href: url, download: (type || 'message') + '.hl7' });
+    document.body.appendChild(link);
+    link.click(); // a local download: no request is made
+    link.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    toast('Saved to a file');
+  }
+
   function loadSaved(entry) {
     el.input.value = entry.text;
     state.messageIndex = 0;
@@ -1211,6 +1231,7 @@
   });
 
   el.saveBtn.addEventListener('click', saveCurrent);
+  $('save-file-btn').addEventListener('click', saveToFile);
   document.addEventListener('keydown', function (e) {
     const mod = e.ctrlKey || e.metaKey;
     if (mod && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 's') {

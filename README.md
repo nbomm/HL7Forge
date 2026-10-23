@@ -23,7 +23,7 @@ All parsing happens in your browser tab. HL7Forge has no server, no backend, no 
 
 - **Content-Security-Policy** in `index.html` sets `connect-src 'none'`. This blocks `fetch`, XHR, WebSocket, EventSource, and `sendBeacon`. `form-action 'none'` blocks form submissions, and image, font, media, frame, and worker sources are restricted to local files or nothing. Even a bug or injected code could not send message data anywhere. `require-trusted-types-for 'script'` with a single allowed policy (`hl7forge-sw`, which can only produce the service worker's script URL and cannot create HTML) makes every HTML-string sink (`innerHTML` and similar) throw in Chromium browsers, so message text can't be turned into markup even by a future code change.
 - The privacy badge in the header counts any request the policy blocks, so a blocked attempt is visible.
-- Messages are held only in page memory. The app never writes them to `localStorage`, `sessionStorage`, IndexedDB, cookies, or files. The only stored value is your light/dark theme preference. If you install the app, the browser also keeps a cache of the app's own files (never message data) so it can open offline.
+- Messages are held only in page memory. The app never writes them to `localStorage`, `sessionStorage`, IndexedDB, or cookies, and it writes a file only when you click **Save to file**. The only stored value is your light/dark theme preference. If you install the app, the browser also keeps a cache of the app's own files (never message data) so it can open offline.
 - The input box turns off spellcheck, autocorrect, Grammarly, and LanguageTool. Some cloud spellcheckers and grammar extensions upload the text you type.
 - Opening files uses the browser's `FileReader`, which reads from local disk. Files are decoded as UTF-8, or as Windows-1252 (with a notice) when they aren't valid UTF-8.
 - The DOM is built with `textContent` only, so message content is never interpreted as HTML.
@@ -65,6 +65,8 @@ When the app is served over HTTPS (such as the GitHub Pages link above) in Chrom
 - Field names and data types for common segments (MSH, EVN, PID, PD1, NK1, PV1, PV2, ORC, OBR, OBX, NTE, AL1, DG1, PR1, IN1, GT1, MSA, ERR, MRG, RXA, RXR, SPM, batch headers). Unknown and Z-segments display generically.
 - OBX-5 components are named according to the value type in OBX-2
 - Code lookups (sex, patient class, ACK codes, abnormal flags, result status, order control, …)
+- **Save to file** downloads the input as a `.hl7` file (UTF-8, `
+` line breaks) through the browser's normal download, with no request made. The file name holds only the message type, e.g. `ADT-A01.hl7`, never patient details
 - Save messages for the session (Ctrl+S), switch between them, rename or delete them, and clear all of them; memory only, with idle auto-clear
 - Keyboard switching between saved messages: Alt+↑ / Alt+↓ for previous / next, Alt+1–9 to jump to a saved message by position, and Ctrl+K for a quick switcher that filters by name. Switching is refused, with a notice, if the input holds a message that hasn't been saved. Clicking a saved message, loading a sample, opening a file, or dropping text asks before replacing unsaved input.
 - Filter by path (`PID-5`), field name, or value; hide empty fields; copy any value
