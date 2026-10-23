@@ -69,6 +69,7 @@ If you host it on an internal web server, also send the same Content-Security-Po
 - Large inputs: results update automatically as you type up to 1,000,000 characters; above that, press Parse (Ctrl+Enter). Messages with thousands of segments show the first segments at once and build the rest in the background.
 - Raw view: click a field to jump to it
 - Warnings for a missing MSH, empty required header fields, bad segment IDs, or bad delimiters
+- A **?** button in the header opens an About dialog describing the app, and a green GitHub button links to this repository (the only outbound link; it opens in a new tab and sends no referrer)
 - **Light** and **Dark** themes, switched with the header button. Light is a soft, low-glare palette with no pure white and VS Code Light+–inspired syntax colors. The theme follows the system setting until you pick one. Every text color meets WCAG AA contrast (4.5:1) in both themes. Responsive layout.
 
 ## Project layout

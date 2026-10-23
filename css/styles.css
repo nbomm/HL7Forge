@@ -148,6 +148,13 @@ h2 { font-size: 15px; margin: 0; font-weight: 600; }
 }
 .icon-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .icon-btn:hover { background: var(--surface-2); }
+a.icon-btn, a.btn { text-decoration: none; }
+
+/* GitHub link: filled green like GitHub's own primary button; the white mark is non-text, so it only needs 3:1. */
+.icon-btn.icon-btn-github, .btn.btn-github { background: #1f883d; border-color: #1f883d; color: #fff; }
+.icon-btn.icon-btn-github:hover, .btn.btn-github:hover { background: #1a7f37; border-color: #1a7f37; }
+.icon-btn-github svg, .btn-github svg { width: 16px; height: 16px; fill: currentColor; stroke: none; }
+.btn.btn-github { gap: 8px; }
 
 /* ---------- Layout ---------- */
 main { max-width: 1440px; margin: 0 auto; padding: 20px 24px 8px; display: grid; gap: 16px; }
@@ -450,6 +457,22 @@ kbd {
   display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
   padding: 7px 12px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px;
 }
+
+/* About dialog (header "?" button). Padding stays 0 so a click on the dialog element itself is a backdrop click. */
+.about {
+  width: min(480px, calc(100% - 32px)); margin: 12vh auto auto; padding: 0;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text); box-shadow: 0 12px 32px rgb(16 24 40 / 20%);
+}
+.about::backdrop { background: rgb(16 24 40 / 35%); }
+.about-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.about-body { padding: 14px 16px 4px; font-size: 13.5px; line-height: 1.55; }
+.about-body p { margin: 0 0 10px; }
+.about-body ul { margin: 0 0 10px; padding-left: 20px; }
+.about-body li { margin-bottom: 4px; }
+.about-body code { font: 12.5px var(--mono); background: var(--surface-2); border-radius: 4px; padding: 0 4px; }
+.about-privacy { padding: 8px 10px; border-radius: 8px; background: var(--accent-soft); color: var(--accent-strong); }
+.about-foot { display: flex; justify-content: flex-end; padding: 10px 16px 14px; }
 
 .toast {
   position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px);

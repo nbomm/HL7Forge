@@ -1245,6 +1245,11 @@
   });
   // Clicking the backdrop (outside the panel) closes the switcher.
   el.switcher.addEventListener('click', function (e) { if (e.target === el.switcher) el.switcher.close(); });
+  // About dialog: opened by the header "?" button; Esc, the close button, or a backdrop click closes it.
+  const about = $('about');
+  $('help-btn').addEventListener('click', function () { about.showModal(); });
+  $('about-close').addEventListener('click', function () { about.close(); });
+  about.addEventListener('click', function (e) { if (e.target === about) about.close(); });
   el.clearAllBtn.addEventListener('click', function () {
     if (window.confirm('Erase all ' + saved.length + ' saved message(s) and the current input? This cannot be undone.')) clearSession();
   });
