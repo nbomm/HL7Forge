@@ -466,8 +466,13 @@ kbd {
 }
 .about::backdrop { background: rgb(16 24 40 / 35%); }
 .about-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+/* --btn-text is the app's darkest text color: near-black in light mode, near-white in dark mode. */
+.about-head h2 { font-size: 18px; font-weight: 700; color: var(--btn-text); }
 .about-version { font-weight: 400; color: var(--text-muted); }
-.about-version code { font: 12.5px var(--mono); }
+.about-version code {
+  font: 600 14px var(--mono); padding: 2px 8px; border-radius: 6px;
+  background: var(--accent-soft); color: var(--accent-strong);
+}
 .about-body { padding: 14px 16px 4px; font-size: 13.5px; line-height: 1.55; }
 .about-body p { margin: 0 0 10px; }
 .about-body ul { margin: 0 0 10px; padding-left: 20px; }
