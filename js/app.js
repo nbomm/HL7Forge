@@ -820,18 +820,30 @@
   }
 
   /**
-   * Downloads the input as a .hl7 file. The name carries only the message type (e.g. "ADT-A01.hl7"), never
-   * patient details, because download history and file listings are visible outside this tab.
+   * Saves the input as a .txt file. Where the browser offers a save dialog (Chromium) it asks where to put the
+   * file and what to call it; elsewhere it falls back to a plain download. The suggested name carries only the
+   * message type (e.g. "ADT-A01.txt"), never patient details, because file listings are visible outside this tab.
    */
   function saveToFile() {
     const text = el.input.value;
     if (!text.trim()) { toast('Nothing to save'); return; }
     const first = P.parse(text.slice(0, 4000)).messages[0]; // MSH-9 is all that's needed
     const type = first ? describeMessage(first).type.replace(/\^/g, '-').replace(/[^\w-]/g, '') : '';
+    const name = (type || 'message') + '.txt';
     // The textarea normalises line breaks to \n; write \r\n so the file reads correctly in any editor and HL7 tool.
     const blob = new Blob([text.replace(/\r\n|\r|\n/g, '\r\n')], { type: 'text/plain;charset=utf-8' });
+
+    if (window.showSaveFilePicker) {
+      window.showSaveFilePicker({ suggestedName: name, types: [{ description: 'Text file', accept: { 'text/plain': ['.txt'] } }] })
+        .then(function (handle) {
+          return handle.createWritable().then(function (out) { return out.write(blob).then(function () { return out.close(); }); });
+        })
+        .then(function () { toast('Saved to a file'); })
+        .catch(function (e) { toast(e && e.name === 'AbortError' ? 'Save cancelled' : 'Could not save the file'); });
+      return;
+    }
     const url = URL.createObjectURL(blob);
-    const link = h('a', { href: url, download: (type || 'message') + '.hl7' });
+    const link = h('a', { href: url, download: name });
     document.body.appendChild(link);
     link.click(); // a local download: no request is made
     link.remove();
