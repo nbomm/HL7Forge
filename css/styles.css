@@ -148,6 +148,7 @@ h2 { font-size: 15px; margin: 0; font-weight: 600; }
 }
 .icon-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .icon-btn:hover { background: var(--surface-2); }
+.icon-btn[hidden] { display: none; } /* display above would otherwise override the hidden attribute */
 a.icon-btn, a.btn { text-decoration: none; }
 
 /* GitHub link: filled green like GitHub's own primary button; the white mark is non-text, so it only needs 3:1. */

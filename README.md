@@ -21,9 +21,9 @@ It's built for the people who read HL7 all day: interface analysts, integration 
 
 All parsing happens in your browser tab. HL7Forge has no server, no backend, no analytics, and no third-party resources (no CDNs, no web fonts). The browser enforces this:
 
-- **Content-Security-Policy** in `index.html` sets `connect-src 'none'`. This blocks `fetch`, XHR, WebSocket, EventSource, and `sendBeacon`. `form-action 'none'` blocks form submissions, and image, font, media, frame, and worker sources are restricted to local files or nothing. Even a bug or injected code could not send message data anywhere. `require-trusted-types-for 'script'` with no allowed policies also makes every HTML-string sink (`innerHTML` and similar) throw in Chromium browsers, so message text can't be turned into markup even by a future code change.
+- **Content-Security-Policy** in `index.html` sets `connect-src 'none'`. This blocks `fetch`, XHR, WebSocket, EventSource, and `sendBeacon`. `form-action 'none'` blocks form submissions, and image, font, media, frame, and worker sources are restricted to local files or nothing. Even a bug or injected code could not send message data anywhere. `require-trusted-types-for 'script'` with a single allowed policy (`hl7forge-sw`, which can only produce the service worker's script URL and cannot create HTML) makes every HTML-string sink (`innerHTML` and similar) throw in Chromium browsers, so message text can't be turned into markup even by a future code change.
 - The privacy badge in the header counts any request the policy blocks, so a blocked attempt is visible.
-- Messages are held only in page memory. The app never writes them to `localStorage`, `sessionStorage`, IndexedDB, cookies, or files. The only stored value is your light/dark theme preference.
+- Messages are held only in page memory. The app never writes them to `localStorage`, `sessionStorage`, IndexedDB, cookies, or files. The only stored value is your light/dark theme preference. If you install the app, the browser also keeps a cache of the app's own files (never message data) so it can open offline.
 - The input box turns off spellcheck, autocorrect, Grammarly, and LanguageTool. Some cloud spellcheckers and grammar extensions upload the text you type.
 - Opening files uses the browser's `FileReader`, which reads from local disk. Files are decoded as UTF-8, or as Windows-1252 (with a notice) when they aren't valid UTF-8.
 - The DOM is built with `textContent` only, so message content is never interpreted as HTML.
@@ -50,6 +50,10 @@ sessionStorage was deliberately not used: Chromium browsers write it to disk une
 No build step and no dependencies. Open `index.html` directly in Chrome, Edge, or Firefox (double-click it, or drag it into a browser window).
 
 If you host it on an internal web server, also send the same Content-Security-Policy as an HTTP response header, with `frame-ancestors 'none'` added (a `<meta>` policy can't set it, and it stops other sites from framing the page). Also send `X-Content-Type-Options: nosniff` and `Referrer-Policy: no-referrer`.
+
+### Installing as an app
+
+When the app is served over HTTPS (such as the GitHub Pages link above) in Chrome or Edge, an **Install** button appears next to the **?** button in the header. Installing gives HL7Forge its own window and lets it open offline. It is still entirely local: the service worker only caches the app's static files, and the same Content-Security-Policy applies. Opened from `index.html` on disk, the app works as before but isn't installable (browsers only allow service workers on HTTPS or localhost). Firefox and Safari don't offer an install prompt through the page, so the button stays hidden there.
 
 ## Features
 
@@ -81,6 +85,10 @@ js/hl7-parser.js         Parser: pure functions, no I/O
 js/hl7-definitions.js    Segment/field/data type names and code tables (v2.5.1)
 js/samples.js            Fictional sample messages
 js/theme-init.js         Applies the saved theme before first paint
+manifest.webmanifest     Web app manifest (name, icons, standalone display)
+sw.js                    Service worker: caches the app's own files for offline use
+js/pwa.js                Registers the service worker; drives the Install button
+icons/                   App icons (icon.svg source, PNGs for install)
 js/version.js            Build stamp (commit hash) shown in the About dialog
 js/app.js                UI rendering and interaction
 scripts/stamp-version.js Regenerates js/version.js; run before committing a release
