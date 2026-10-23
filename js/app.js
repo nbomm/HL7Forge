@@ -834,7 +834,10 @@
     const blob = new Blob([text.replace(/\r\n|\r|\n/g, '\r\n')], { type: 'text/plain;charset=utf-8' });
 
     if (window.showSaveFilePicker) {
-      window.showSaveFilePicker({ suggestedName: name, types: [{ description: 'Text file', accept: { 'text/plain': ['.txt'] } }] })
+      window.showSaveFilePicker({ suggestedName: name, types: [
+        { description: 'Text file', accept: { 'text/plain': ['.txt'] } }, // first entry is the default
+        { description: 'HL7 file', accept: { 'text/plain': ['.hl7'] } },
+      ] })
         .then(function (handle) {
           return handle.createWritable().then(function (out) { return out.write(blob).then(function () { return out.close(); }); });
         })

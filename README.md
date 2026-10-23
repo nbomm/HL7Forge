@@ -65,7 +65,7 @@ When the app is served over HTTPS (such as the GitHub Pages link above) in Chrom
 - Field names and data types for common segments (MSH, EVN, PID, PD1, NK1, PV1, PV2, ORC, OBR, OBX, NTE, AL1, DG1, PR1, IN1, GT1, MSA, ERR, MRG, RXA, RXR, SPM, batch headers). Unknown and Z-segments display generically.
 - OBX-5 components are named according to the value type in OBX-2
 - Code lookups (sex, patient class, ACK codes, abnormal flags, result status, order control, …)
-- **Save to file** saves the input as a `.txt` file (UTF-8, `\r\n` line breaks). Chrome and Edge open a save dialog so you choose the folder and name; other browsers download it to the default folder. No request is made. The suggested name holds only the message type, e.g. `ADT-A01.txt`, never patient details
+- **Save to file** saves the input as a `.txt` file (or `.hl7`, from the dialog's file-type list) (UTF-8, `\r\n` line breaks). Chrome and Edge open a save dialog so you choose the folder and name; other browsers download it to the default folder. No request is made. The suggested name holds only the message type, e.g. `ADT-A01.txt`, never patient details
 - Save messages for the session (Ctrl+S), switch between them, rename or delete them, and clear all of them; memory only, with idle auto-clear
 - Keyboard switching between saved messages: Alt+↑ / Alt+↓ for previous / next, Alt+1–9 to jump to a saved message by position, and Ctrl+K for a quick switcher that filters by name. Switching is refused, with a notice, if the input holds a message that hasn't been saved. Clicking a saved message, loading a sample, opening a file, or dropping text asks before replacing unsaved input.
 - Filter by path (`PID-5`), field name, or value; hide empty fields; copy any value
